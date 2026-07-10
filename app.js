@@ -7,15 +7,18 @@
   var TODAY_TASKS = [
     "Alimentar e colocar água para as cachorras",
     "Trocar tapete e recolher cocô",
+    "Preparar lancheira",
+    "Guardar jogo americano",
     "Tirar o lixo",
     "Lavar roupa",
     "Estender roupa",
-    "Recolher e guardar roupa",
-    "Deixar a pia limpa",
-    "Organizar mesa e cozinha",
-    "Guardar brinquedos e organizar a sala",
+    "Tirar roupa do varal",
+    "Guardar roupas limpas",
+    "Lavar louça",
+    "Guardar brinquedos e organizar a bagunça",
     "Preparar mochilas e materiais",
     "Verificar o que falta comprar",
+    "Agradecer por algo legal",
     "Cuidar de nós: tempo em família"
   ];
 
@@ -24,13 +27,7 @@
     "Preparar refeições",
     "Fazer compras do mês ou mercado",
     "Verificar itens que estão acabando",
-    "Lavar e guardar roupas",
-    "Tirar e descartar o lixo",
-    "Organizar armários",
-    "Limpar banheiros",
-    "Limpeza geral da casa",
-    "Transportes e compromissos das crianças",
-    "Outras tarefas importantes"
+    "Limpeza geral da casa"
   ];
 
   var DOG_TASKS = [

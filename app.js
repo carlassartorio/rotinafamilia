@@ -140,36 +140,38 @@
     renderDogs();
   }
 
-  function makeTask(title, doneInfo, onClickText, clickHandler) {
-    var div = document.createElement("div");
-    div.className = "task" + (doneInfo ? " done" : "");
-
-    var main = document.createElement("div");
-    main.className = "task-main";
-
-    var t = document.createElement("span");
-    t.className = "task-title";
-    t.appendChild(document.createTextNode(title));
-    main.appendChild(t);
-
-    var meta = document.createElement("span");
-    meta.className = "task-meta";
-    meta.appendChild(document.createTextNode(doneInfo ? doneInfo : "Ainda não concluída"));
-    main.appendChild(meta);
-
-    var action = document.createElement("div");
-    action.className = "task-action";
-
-    var btn = document.createElement("button");
-    btn.className = "check-btn";
-    btn.appendChild(document.createTextNode(doneInfo ? "Desmarcar" : onClickText));
-    btn.onclick = clickHandler;
-    action.appendChild(btn);
-
-    div.appendChild(main);
-    div.appendChild(action);
-    return div;
-  }
+  function makeTask(title, isDone, infoText, onClickText, clickHandler) {
+  var div = document.createElement("div");
+  div.className = "task" + (isDone ? " done" : "");
+  var main = document.createElement("div");
+  main.className = "task-main";
+  var t = document.createElement("span");
+  t.className = "task-title";
+  t.appendChild(document.createTextNode(title));
+  main.appendChild(t);
+  var meta = document.createElement("span");
+  meta.className = "task-meta";
+  meta.appendChild(
+    document.createTextNode(
+      infoText || "Ainda não concluída"
+    )
+  );
+  main.appendChild(meta);
+  var action = document.createElement("div");
+  action.className = "task-action";
+  var btn = document.createElement("button");
+  btn.className = "check-btn";
+  btn.appendChild(
+    document.createTextNode(
+      isDone ? "Desmarcar" : onClickText
+    )
+  );
+  btn.onclick = clickHandler;
+  action.appendChild(btn);
+  div.appendChild(main);
+  div.appendChild(action);
+  return div;
+}
 
   function renderToday() {
     var list = document.getElementById("today-list");
@@ -178,7 +180,12 @@
       (function (idx) {
         var rec = state.today[idx];
         var info = rec ? "Feito por " + rec.person + " às " + rec.time : "";
-        list.appendChild(makeTask(TODAY_TASKS[idx], info, "Concluir", function () {
+       list.appendChild(makeTask(
+      TODAY_TASKS[idx],
+      !!rec,
+      info,
+      "Concluir",
+      function () {
           if (state.today[idx]) {
             delete state.today[idx];
             saveState();
@@ -209,57 +216,72 @@ function renderChildren() {
 
 function renderChildTasks(elementId, tasks, childState, childName) {
   var list = document.getElementById(elementId);
-
   if (!list) return;
-
   list.innerHTML = "";
-
   for (var i = 0; i < tasks.length; i++) {
     (function (idx) {
       var rec = childState[idx];
-
       var info = rec
         ? "Concluído às " + rec.time
         : "Ainda não concluída";
-
       list.appendChild(
-        makeTask(tasks[idx], info, "Concluir", function () {
-          if (childState[idx]) {
-            delete childState[idx];
-          } else {
-            childState[idx] = {
-              person: childName,
-              time: nowTime()
-            };
+        makeTask(
+          tasks[idx],
+          !!rec,
+          info,
+          "Concluir",
+          function () {
+            if (childState[idx]) {
+              delete childState[idx];
+            } else {
+              childState[idx] = {
+                person: childName,
+                time: nowTime()
+              };
+            }
+            saveState();
+            renderChildren();
           }
-
-          saveState();
-          renderChildren();
-        })
+        )
       );
     })(i);
   }
 }
+
   function renderWeekly() {
-    var list = document.getElementById("weekly-list");
-    list.innerHTML = "";
-    for (var i = 0; i < WEEKLY_TASKS.length; i++) {
-      (function (idx) {
-        var person = state.weekly[idx];
-        var info = person ? "Escolhida por " + person : "";
-        list.appendChild(makeTask(WEEKLY_TASKS[idx], info, "Escolher", function () {
-          if (state.weekly[idx]) {
-            delete state.weekly[idx];
-            saveState();
-            renderWeekly();
-          } else {
-            pendingTask = { type: "weekly", index: idx };
-            openModal();
+  var list = document.getElementById("weekly-list");
+  list.innerHTML = "";
+  for (var i = 0; i < WEEKLY_TASKS.length; i++) {
+    (function (idx) {
+      var person = state.weekly[idx];
+      var info = person
+        ? "Escolhida por " + person
+        : "Ainda não escolhida";
+      list.appendChild(
+        makeTask(
+          WEEKLY_TASKS[idx],
+          !!person,
+          info,
+          "Escolher",
+          function () {
+            if (state.weekly[idx]) {
+              delete state.weekly[idx];
+              saveState();
+              renderWeekly();
+            } else {
+              pendingTask = {
+                type: "weekly",
+                index: idx
+              };
+              openModal();
+            }
           }
-        }));
-      })(i);
-    }
+        )
+      );
+    })(i);
   }
+}
+
 
   function renderShopping() {
   var list = document.getElementById("shopping-list");
@@ -337,34 +359,40 @@ function renderChildTasks(elementId, tasks, childState, childName) {
     return [first, second];
   }
 
-  function renderDogs() {
-    var ass = dogAssignment();
-    document.getElementById("dog-duty").innerHTML =
-      "<strong>" + ass[0] + "</strong>: alimentação e água<br>" +
-      "<strong>" + ass[1] + "</strong>: trocar tapete e recolher cocô";
-
-    var list = document.getElementById("dog-list");
-    list.innerHTML = "";
-
-    for (var i = 0; i < DOG_TASKS.length; i++) {
-      (function (idx) {
-        var rec = state.dogDone[idx];
-        var person = ass[idx];
-        var info = rec ? "Concluído por " + rec.person + " às " + rec.time : "Responsável de hoje: " + person;
-        list.appendChild(makeTask(DOG_TASKS[idx], info, "Concluir", function () {
-          if (state.dogDone[idx]) {
-            delete state.dogDone[idx];
+  function renderChildTasks(elementId, tasks, childState, childName) {
+  var list = document.getElementById(elementId);
+  if (!list) return;
+  list.innerHTML = "";
+  for (var i = 0; i < tasks.length; i++) {
+    (function (idx) {
+      var rec = childState[idx];
+      var info = rec
+        ? "Concluído às " + rec.time
+        : "Ainda não concluída";
+      list.appendChild(
+        makeTask(
+          tasks[idx],
+          !!rec,
+          info,
+          "Concluir",
+          function () {
+            if (childState[idx]) {
+              delete childState[idx];
+            } else {
+              childState[idx] = {
+                person: childName,
+                time: nowTime()
+              };
+            }
             saveState();
-            renderDogs();
-          } else {
-            state.dogDone[idx] = { person: person, time: nowTime() };
-            saveState();
-            renderDogs();
+            renderChildren();
           }
-        }));
-      })(i);
-    }
+        )
+      );
+    })(i);
   }
+}
+
 
   function openModal() {
     document.getElementById("person-modal").className = "modal";

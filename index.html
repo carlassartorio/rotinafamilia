@@ -17,6 +17,7 @@
 
     <nav>
       <button class="nav-btn active" data-screen="hoje">Hoje</button>
+      <button class="nav-btn" data-screen="children-screen">Rotinas</button>
       <button class="nav-btn" data-screen="semana">Semana</button>
       <button class="nav-btn" data-screen="compras">Compras</button>
       <button class="nav-btn" data-screen="cachorras">Cachorras</button>
@@ -29,7 +30,56 @@
         <div id="today-list" class="task-list"></div>
         <button id="reset-today" class="secondary">Limpar marcações de hoje</button>
       </section>
+   
+      <section id="children-screen" class="screen">
+  <div class="screen-header">
+    <div>
+      <h2>Rotinas das crianças</h2>
+      <p class="hint">
+        Cada criança pode marcar suas próprias atividades.
+      </p>
+    </div>
+  </div>
 
+  <div class="children-grid">
+    <div class="child-card jovana-card">
+      <div class="child-header">
+        <div>
+          <span class="child-emoji">🌸</span>
+          <h3>Rotina da Jovana</h3>
+        </div>
+
+        <button
+          type="button"
+          id="reset-jovana"
+          class="secondary-btn">
+          Limpar
+        </button>
+      </div>
+
+      <div id="jovana-list" class="task-list"></div>
+    </div>
+
+    <div class="child-card lorenzo-card">
+      <div class="child-header">
+        <div>
+          <span class="child-emoji">🚀</span>
+          <h3>Rotina do Lorenzo</h3>
+        </div>
+
+        <button
+          type="button"
+          id="reset-lorenzo"
+          class="secondary-btn">
+          Limpar
+        </button>
+      </div>
+
+      <div id="lorenzo-list" class="task-list"></div>
+    </div>
+  </div>
+</section>
+      
       <section id="semana" class="screen">
         <h2>Escolha das tarefas da semana</h2>
         <p class="hint">Cada tarefa pode ser assumida por qualquer pessoa.</p>

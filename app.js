@@ -394,7 +394,32 @@ function renderChildTasks(elementId, tasks, childState, childName) {
 }
 
 
-  function openModal() {
+  
+function renderDogs() {
+  var duty=document.getElementById("dog-duty");
+  var list=document.getElementById("dog-list");
+  if(!duty||!list)return;
+  var a=dogAssignment();
+  duty.innerHTML="<strong>Revezamento de hoje</strong><br>🐶 Alimentação e água: "+a[0]+"<br>🧹 Tapete e cocô: "+a[1];
+  list.innerHTML="";
+  for(var i=0;i<DOG_TASKS.length;i++){
+    (function(idx){
+      var rec=state.dogDone[idx];
+      var info=rec?"Concluído às "+rec.time+" por "+rec.person:"Ainda não concluída";
+      list.appendChild(makeTask(DOG_TASKS[idx],!!rec,info,"Concluir",function(){
+        if(state.dogDone[idx]){
+          delete state.dogDone[idx];
+        } else {
+          state.dogDone[idx]={person:a[idx],time:nowTime()};
+        }
+        saveState();
+        renderDogs();
+      }));
+    })(i);
+  }
+}
+
+function openModal() {
     document.getElementById("person-modal").className = "modal";
   }
 

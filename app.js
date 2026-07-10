@@ -24,6 +24,7 @@
   var JOVANA_TASKS = [
     "Arrumar a cama",
     "Escovar os dentes",
+    "ARrumar o cabelo",
     "Passar creme",
     "Passar perfume",
     "Fazer o lanche",
@@ -37,6 +38,7 @@
   var LORENZO_TASKS = [
     "Arrumar a cama",
     "Escovar os dentes",
+    "ARrumar o cabelo",
     "Passar creme",
     "Passar perfume",
     "Fazer o lanche",

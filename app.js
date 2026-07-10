@@ -262,29 +262,68 @@ function renderChildTasks(elementId, tasks, childState, childName) {
   }
 
   function renderShopping() {
-    var list = document.getElementById("shopping-list");
-    list.innerHTML = "";
-    if (!state.shopping.length) {
-      var empty = document.createElement("p");
-      empty.className = "hint";
-      empty.appendChild(document.createTextNode("Nenhum item adicionado."));
-      list.appendChild(empty);
-      return;
-    }
+  var list = document.getElementById("shopping-list");
+  list.innerHTML = "";
 
-    for (var i = 0; i < state.shopping.length; i++) {
-      (function (idx) {
-        var item = state.shopping[idx];
-        var info = item.bought ? "Comprado" : "Pendente";
-        list.appendChild(makeTask(item.name, info, item.bought ? "Desmarcar" : "Comprei", function () {
-          item.bought = !item.bought;
-          saveState();
-          renderShopping();
-        }));
-      })(i);
-    }
+  if (!state.shopping.length) {
+    var empty = document.createElement("p");
+    empty.className = "hint";
+    empty.appendChild(
+      document.createTextNode("Nenhum item adicionado.")
+    );
+    list.appendChild(empty);
+    return;
   }
 
+  for (var i = 0; i < state.shopping.length; i++) {
+    (function (idx) {
+      var item = state.shopping[idx];
+
+      var div = document.createElement("div");
+      div.className = "task" + (item.bought ? " done" : "");
+
+      var main = document.createElement("div");
+      main.className = "task-main";
+
+      var title = document.createElement("span");
+      title.className = "task-title";
+      title.appendChild(document.createTextNode(item.name));
+
+      var meta = document.createElement("span");
+      meta.className = "task-meta";
+      meta.appendChild(
+        document.createTextNode(
+          item.bought ? "Comprado" : "Pendente"
+        )
+      );
+
+      main.appendChild(title);
+      main.appendChild(meta);
+
+      var action = document.createElement("div");
+      action.className = "task-action";
+
+      var button = document.createElement("button");
+      button.className = "check-btn";
+      button.appendChild(
+        document.createTextNode(
+          item.bought ? "Desmarcar" : "Comprei"
+        )
+      );
+
+      button.onclick = function () {
+        item.bought = !item.bought;
+        saveState();
+        renderShopping();
+      };
+
+      action.appendChild(button);
+      div.appendChild(main);
+      div.appendChild(action);
+      list.appendChild(div);
+    })(i);
+  }
+}
   function dogAssignment() {
     var d = new Date();
     var even = d.getDate() % 2 === 0;

@@ -64,6 +64,8 @@
     return {
       todayDate: dateKey(),
       today: {},
+      jovana:{},
+      lorenzo:{},
       weekKey: weekKey(),
       weekly: {},
       shopping: [],
@@ -81,10 +83,17 @@
       data = null;
     }
     if (!data) data = defaultState();
-
+    if (!data.jovana) data.jovana = {};
+    if (!data.lorenzo) data.lorenzo = {};
+    if (!data.weekly) data.weekly = {};
+    if (!data.shopping) data.shopping = {};
+    if (!data.dogdone) data.dogdone = {};
+      
     if (data.todayDate !== dateKey()) {
       data.todayDate = dateKey();
       data.today = {};
+      data.jovana = {};
+      data.lorenzo = {};
       data.dogDone = {};
       data.dogSwapDate = "";
       data.dogSwapped = false;
@@ -125,6 +134,7 @@
 
   function renderAll() {
     renderToday();
+    renderChildren();
     renderWeekly();
     renderShopping();
     renderDogs();
@@ -181,7 +191,55 @@
       })(i);
     }
   }
+function renderChildren() {
+  renderChildTasks(
+    "jovana-list",
+    JOVANA_TASKS,
+    state.jovana,
+    "Jovana"
+  );
 
+  renderChildTasks(
+    "lorenzo-list",
+    LORENZO_TASKS,
+    state.lorenzo,
+    "Lorenzo"
+  );
+}
+
+function renderChildTasks(elementId, tasks, childState, childName) {
+  var list = document.getElementById(elementId);
+
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  for (var i = 0; i < tasks.length; i++) {
+    (function (idx) {
+      var rec = childState[idx];
+
+      var info = rec
+        ? "Concluído às " + rec.time
+        : "Ainda não concluída";
+
+      list.appendChild(
+        makeTask(tasks[idx], info, "Concluir", function () {
+          if (childState[idx]) {
+            delete childState[idx];
+          } else {
+            childState[idx] = {
+              person: childName,
+              time: nowTime()
+            };
+          }
+
+          saveState();
+          renderChildren();
+        })
+      );
+    })(i);
+  }
+}
   function renderWeekly() {
     var list = document.getElementById("weekly-list");
     list.innerHTML = "";
@@ -321,7 +379,29 @@
         renderToday();
       }
     };
+var resetJovana = document.getElementById("reset-jovana");
 
+if (resetJovana) {
+  resetJovana.onclick = function () {
+    if (confirm("Apagar todas as marcações da Jovana hoje?")) {
+      state.jovana = {};
+      saveState();
+      renderChildren();
+    }
+  };
+}
+
+var resetLorenzo = document.getElementById("reset-lorenzo");
+
+if (resetLorenzo) {
+  resetLorenzo.onclick = function () {
+    if (confirm("Apagar todas as marcações do Lorenzo hoje?")) {
+      state.lorenzo = {};
+      saveState();
+      renderChildren();
+    }
+  };
+}
     document.getElementById("reset-week").onclick = function () {
       if (confirm("Apagar todas as escolhas da semana?")) {
         state.weekly = {};

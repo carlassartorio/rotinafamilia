@@ -8,7 +8,7 @@ header h1 { margin: 0; font-size: 34px; }
 header p { margin: 5px 0 0; font-size: 20px; color: #e05a7a; font-weight: bold; }
 
 nav { display: table; width: 100%; table-layout: fixed; background: #fff; border-bottom: 1px solid #ddd; }
-.nav-btn { display: table-cell; width: 25%; padding: 15px 5px; border: 0; background: #fff; font-size: 18px; font-weight: bold; color: #34495e; }
+.nav-btn { display: table-cell; width: 20%; padding: 15px 5px; border: 0; background: #fff; font-size: 18px; font-weight: bold; color: #34495e; }
 .nav-btn.active { background: #eaf4ff; color: #1769aa; border-bottom: 4px solid #1769aa; }
 
 main { padding: 16px; }

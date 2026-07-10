@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Família Almeida Sarcinelli</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Centro de Comando</h1>
+      <p>Família Almeida Sarcinelli</p>
+    </header>
+
+    <nav>
+      <button class="nav-btn active" data-screen="hoje">Hoje</button>
+      <button class="nav-btn" data-screen="semana">Semana</button>
+      <button class="nav-btn" data-screen="compras">Compras</button>
+      <button class="nav-btn" data-screen="cachorras">Cachorras</button>
+    </nav>
+
+    <main>
+      <section id="hoje" class="screen active">
+        <h2>O que precisa ser feito hoje</h2>
+        <p class="hint">Quem fizer, toca na atividade e escolhe o próprio nome.</p>
+        <div id="today-list" class="task-list"></div>
+        <button id="reset-today" class="secondary">Limpar marcações de hoje</button>
+      </section>
+
+      <section id="semana" class="screen">
+        <h2>Escolha das tarefas da semana</h2>
+        <p class="hint">Cada tarefa pode ser assumida por qualquer pessoa.</p>
+        <div id="weekly-list" class="task-list"></div>
+        <button id="reset-week" class="secondary">Limpar escolhas da semana</button>
+      </section>
+
+      <section id="compras" class="screen">
+        <h2>Lista de compras</h2>
+        <form id="shopping-form">
+          <input id="shopping-input" type="text" placeholder="O que está faltando?" autocomplete="off">
+          <button type="submit">Adicionar</button>
+        </form>
+        <div id="shopping-list" class="task-list"></div>
+        <button id="clear-bought" class="secondary">Apagar itens comprados</button>
+      </section>
+
+      <section id="cachorras" class="screen">
+        <h2>Rotina das cachorras</h2>
+        <div id="dog-duty" class="dog-card"></div>
+        <div id="dog-list" class="task-list"></div>
+        <button id="swap-dog-duty" class="secondary">Inverter revezamento de hoje</button>
+      </section>
+    </main>
+
+    <div id="person-modal" class="modal hidden">
+      <div class="modal-box">
+        <h3>Quem realizou?</h3>
+        <div class="people">
+          <button class="person carla" data-person="Carla">Carla</button>
+          <button class="person lara" data-person="Lara">Lara</button>
+          <button class="person jovana" data-person="Jovana">Jovana</button>
+          <button class="person lorenzo" data-person="Lorenzo">Lorenzo</button>
+        </div>
+        <button id="cancel-modal" class="secondary">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -57,3 +57,66 @@ form button { width: 28%; border: 0; background: #1769aa; color: white; font-wei
   .task-main { width: 68%; }
   .task-action { width: 32%; }
 }
+.children-grid {
+  display: block;
+}
+
+.child-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 2px solid #e4e4e4;
+}
+
+.jovana-card {
+  border-color: #efb4cb;
+}
+
+.lorenzo-card {
+  border-color: #a9ccef;
+}
+
+.child-header {
+  display: table;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.child-header > div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.child-header > button {
+  display: table-cell;
+  vertical-align: middle;
+  float: right;
+}
+
+.child-header h3 {
+  display: inline-block;
+  margin: 0;
+  font-size: 22px;
+}
+
+.child-emoji {
+  display: inline-block;
+  margin-right: 7px;
+  font-size: 26px;
+  vertical-align: middle;
+}
+
+.secondary-btn {
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid #bbbbbb;
+  border-radius: 10px;
+  background: #f4f4f4;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.secondary-btn:active {
+  background: #dddddd;
+}

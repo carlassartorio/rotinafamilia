@@ -21,20 +21,42 @@
     "Agradecer por algo legal",
     "Cuidar de nós: tempo em família"
   ];
-
-  var WEEKLY_TASKS = [
+ var JOVANA_TASKS = [
+    "Arrumar a cama",
+    "Escovar os dentes",
+    "Passar creme",
+    "Passar perfume",
+    "Fazer o lanche",
+    "Arrumar a mochila",
+      "Uniforme",
+      "Calcinha",
+      "Toalha",    
+    "Cuidar das cachorras"
+  ];
+   var LORENZO_TASKS = [
+    "Arrumar a cama",
+    "Escovar os dentes",
+    "Passar creme",
+    "Passar perfume",
+    "Fazer o lanche",
+    "Arrumar a mochila",
+      "Uniforme",
+      "Cueca",
+      "Toalha",    
+    "Cuidar das cachorras"
+  ];
+   var DOG_TASKS = [
+    "Alimentação e água",
+    "Trocar tapete e recolher cocô"
+  ];
+ var WEEKLY_TASKS = [
     "Planejar cardápio da semana",
     "Preparar refeições",
     "Fazer compras do mês ou mercado",
     "Verificar itens que estão acabando",
     "Limpeza geral da casa"
   ];
-
-  var DOG_TASKS = [
-    "Alimentação e água",
-    "Trocar tapete e recolher cocô"
-  ];
-
+  
   var state = loadState();
   var pendingTask = null;
 
